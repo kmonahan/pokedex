@@ -1,6 +1,5 @@
 import { createAtomicStyles, createAtomsFn } from "@vanilla-extract/sprinkles";
 import { globalFontFace } from "@vanilla-extract/css";
-import { backgroundColor } from "./vars.css";
 
 globalFontFace("Open Sans", {
   src: "url('/fonts/open-sans/OpenSans-Regular-webfont.woff') format('woff')",
@@ -52,15 +51,15 @@ export const constrainWidths = {
 export const moonColors = {
   purple: "#4d1f82",
   darkBlue: "#0f2f8f",
-  lightBlue: "#1aa2dc",
+  lightBlue: "#98dffb",
   silver: "#b8bc71",
 };
 
 export const sunColors = {
   red: "#bb2f1f",
-  yellow: "#f8b909",
-  orange: "#f7991f",
-  offWhite: "#fdfcfa",
+  yellow: "#fba81a",
+  orange: "#f8901f",
+  offWhite: "#f9e0a2",
 };
 
 export const colorTokens = {
