@@ -1,12 +1,14 @@
-import { atoms, spacing } from "../../base/atoms.css";
+import { atoms, constrain as constrainStyles } from "../../base/atoms.css";
 import { style } from "@vanilla-extract/css";
 
 export const constrain = style([
-  atoms({
+  constrainStyles({
     maxWidth: "medium",
+  }),
+  atoms({
+    padding: 2.5,
   }),
   style({
     margin: "0 auto",
-    padding: spacing["2.5"],
   }),
 ]);

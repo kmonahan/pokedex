@@ -3,20 +3,50 @@ import { GetStaticProps } from "next";
 import Card from "../source/components/Card";
 import { grid } from "../source/components/Grid/grid.css";
 import { constrain } from "../source/components/Layout/layouts.css";
+import { h1 } from "../source/base/headings.css";
+import { useState, ChangeEvent } from "react";
+import { theme } from "../source/base/theme.css";
+import { mainCss } from "../source/components/Layout/main.css";
 
 interface HomePageProps {
   pokemon: Pokemon[];
 }
 
 export default function Home({ pokemon }: HomePageProps) {
+  const [themeClass, setThemeClass] = useState("moon");
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) =>
+    setThemeClass(event.currentTarget.value);
   return (
-    <div>
+    <div className={`${themeClass} ${theme} ${mainCss}`}>
       <Head>
         <title>Pokemon Sun/Moon Pokedex</title>
       </Head>
 
       <main className={constrain}>
-        <h1>Pokémon Sun/Moon Pokédex</h1>
+        <h1 className={h1}>Pokémon Sun/Moon Pokédex</h1>
+        <fieldset>
+          <legend>
+            <span>Select Theme</span>
+          </legend>
+          <input
+            type="radio"
+            name="theme"
+            value="moon"
+            id="theme-moon"
+            onChange={handleChange}
+            checked={themeClass === "moon"}
+          />
+          <label htmlFor="theme-moon">Moon</label>
+          <input
+            type="radio"
+            name="theme"
+            value="sun"
+            id="theme-sun"
+            onChange={handleChange}
+            checked={themeClass === "sun"}
+          />
+          <label htmlFor="theme-sun">Sun</label>
+        </fieldset>
 
         <ol className={grid}>
           {pokemon.map((pokemon) => (
