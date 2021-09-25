@@ -4,9 +4,6 @@ import Card from "../source/components/Card";
 import { grid } from "../source/components/Grid/grid.css";
 import { constrain } from "../source/components/Layout/layouts.css";
 import { h1 } from "../source/base/headings.css";
-import { useState, ChangeEvent } from "react";
-import { theme } from "../source/base/theme.css";
-import { mainCss } from "../source/components/Layout/main.css";
 import {
   fetchPokedexes,
   fetchPokemon,

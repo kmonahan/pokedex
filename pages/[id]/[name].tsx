@@ -5,7 +5,14 @@ import {
 } from "../../source/data";
 import { GetStaticPropsContext } from "next";
 import { cardImg } from "../../source/components/Card/card.css";
-import Link from "next/link";
+import Head from "next/head";
+import { constrain } from "../../source/components/Layout/layouts.css";
+import { h1 } from "../../source/base/headings.css";
+import {
+  detailLayout,
+  detailLayoutHeader,
+} from "../../source/components/Layout/detail.css";
+import Evolution from "../../source/components/Evolution";
 
 interface PokemonPageProps {
   pokemon: PokemonDetail;
@@ -13,116 +20,83 @@ interface PokemonPageProps {
 
 function PokemonPage({ pokemon }: PokemonPageProps): JSX.Element {
   return (
-    <main>
-      <h1>{pokemon.name}</h1>
-      <p>Type: {pokemon.types.map((type) => type.type.name).join(", ")}</p>
-      <div>
-        <img
-          className={cardImg}
-          src={pokemon.sprites.front_default}
-          alt={`${pokemon.name} front view`}
-        />
-      </div>
-      {pokemon.evolution && pokemon.evolution.chain && (
+    <>
+      <Head>
+        <title>{pokemon.name} | Pokemon Sun/Moon Pokedex</title>
+      </Head>
+      <main className={`${constrain} ${detailLayout}`}>
+        <h1 className={`${h1} ${detailLayoutHeader}`}>{pokemon.name}</h1>
         <div>
-          {pokemon.evolution.chain.species.name !== pokemon.name && (
-            <>
-              <h3>Evolves From</h3>
-              <p>{pokemon.evolution.chain.species.name}</p>
-            </>
+          <img
+            className={cardImg}
+            src={pokemon.sprites.front_default}
+            alt={`${pokemon.name} front view`}
+          />
+        </div>
+        <div>
+          <p>{pokemon.types.map((type) => type.type.name).join(", ")}</p>
+          {pokemon.is_baby && (
+            <p>
+              <strong>Baby</strong>
+            </p>
           )}
-          {pokemon.evolution.chain.evolves_to && (
-            <>
-              {pokemon.evolution.chain.evolves_to.map((evolves_to) =>
-                evolves_to.species.name === pokemon.name ? (
-                  ""
-                ) : (
-                  <>
-                    <h3 key={evolves_to.species.name}>Evolves To</h3>
-                    <div>
-                      {evolves_to.species.name}
-                      <dl>
-                        {evolves_to.evolution_details.map((details) => {
-                          return Object.entries(details)
-                            .filter(([key, value]) => value)
-                            .map(([key, value]) => {
-                              if (
-                                typeof value === "object" &&
-                                value !== null &&
-                                value.name
-                              ) {
-                                return (
-                                  <>
-                                    <dt key={key}>{key}</dt>
-                                    <dd>{value.name}</dd>
-                                  </>
-                                );
-                              }
-                              return (
-                                <>
-                                  <dt key={key}>{key}</dt>
-                                  <dd>{value}</dd>
-                                </>
-                              );
-                            });
-                        })}
-                      </dl>
-                    </div>
-                  </>
-                )
-              )}
-            </>
+          {pokemon.is_legendary && (
+            <p>
+              <strong>Legendary</strong>
+            </p>
+          )}
+          {pokemon.is_mythical && (
+            <p>
+              <strong>Mythical</strong>
+            </p>
           )}
         </div>
-      )}
-      {pokemon.is_baby && (
-        <p>
-          <strong>Baby</strong>
-        </p>
-      )}
-      {pokemon.is_legendary && (
-        <p>
-          <strong>Legendary</strong>
-        </p>
-      )}
-      {pokemon.is_mythical && (
-        <p>
-          <strong>Mythical</strong>
-        </p>
-      )}
-      <h2>Moves</h2>
-      <ul>
-        {pokemon.moves
-          .filter((move) => move.version_group_details[0].level_learned_at > 0)
-          .sort((moveA, moveB) => {
-            if (
-              moveA.version_group_details[0].level_learned_at >
-              moveB.version_group_details[0].level_learned_at
-            ) {
-              return 1;
-            }
-            if (
-              moveA.version_group_details[0].level_learned_at <
-              moveB.version_group_details[0].level_learned_at
-            ) {
-              return -1;
-            }
-            return 0;
-          })
-          .map((move) => (
-            <li key={move.move.name}>
-              {move.move.name.replace("-", " ")}:{" "}
-              {move.version_group_details[0].level_learned_at}
-            </li>
+        {pokemon.evolution && pokemon.evolution.chain && (
+          <Evolution
+            chain={pokemon.evolution.chain}
+            currentPokemon={pokemon.species.name}
+          />
+        )}
+        <div>
+          <h2>Moves</h2>
+          <ul>
+            {pokemon.moves
+              .filter(
+                (move) => move.version_group_details[0].level_learned_at > 0
+              )
+              .sort((moveA, moveB) => {
+                if (
+                  moveA.version_group_details[0].level_learned_at >
+                  moveB.version_group_details[0].level_learned_at
+                ) {
+                  return 1;
+                }
+                if (
+                  moveA.version_group_details[0].level_learned_at <
+                  moveB.version_group_details[0].level_learned_at
+                ) {
+                  return -1;
+                }
+                return 0;
+              })
+              .map((move) => (
+                <li key={move.move.name}>
+                  {move.move.name.replace("-", " ")}:{" "}
+                  {move.version_group_details[0].level_learned_at}
+                </li>
+              ))}
+          </ul>
+        </div>
+        <div>
+          <h2>Stats</h2>
+          {pokemon.stats.map((stat) => (
+            <div key={stat.stat.name}>
+              {stat.stat.name.replace("-", " ")}: {stat.base_stat}/255
+            </div>
           ))}
-      </ul>
-      <h2>Stats</h2>
-      {pokemon.stats.map((stat) => (
-        <div key={stat.stat.name}>
-          {stat.stat.name.replace("-", " ")}: {stat.base_stat}
         </div>
-      ))}
-    </main>
+      </main>
+    </>
   );
 }
 
