@@ -1,6 +1,10 @@
-import { fetchPokedexes, fetchPokemonSpecies } from "../source/data";
+import {
+  fetchPokedexes,
+  fetchPokemon,
+  fetchPokemonSpecies,
+} from "../../source/data";
 import { GetStaticPropsContext } from "next";
-import { cardImg } from "../source/components/Card/card.css";
+import { cardImg } from "../../source/components/Card/card.css";
 import Link from "next/link";
 
 interface PokemonPageProps {
@@ -24,11 +28,7 @@ function PokemonPage({ pokemon }: PokemonPageProps): JSX.Element {
           {pokemon.evolution.chain.species.name !== pokemon.name && (
             <>
               <h3>Evolves From</h3>
-              <p>
-                <Link href={`/${pokemon.evolution.chain.species.name}`}>
-                  {pokemon.evolution.chain.species.name}
-                </Link>
-              </p>
+              <p>{pokemon.evolution.chain.species.name}</p>
             </>
           )}
           {pokemon.evolution.chain.evolves_to && (
@@ -40,9 +40,7 @@ function PokemonPage({ pokemon }: PokemonPageProps): JSX.Element {
                   <>
                     <h3 key={evolves_to.species.name}>Evolves To</h3>
                     <div>
-                      <Link href={`/${evolves_to.species.name}`}>
-                        {evolves_to.species.name}
-                      </Link>
+                      {evolves_to.species.name}
                       <dl>
                         {evolves_to.evolution_details.map((details) => {
                           return Object.entries(details)
@@ -132,7 +130,7 @@ export default PokemonPage;
 export async function getStaticProps({ params }: GetStaticPropsContext) {
   if (params) {
     const pokeApiRes = await Promise.all([
-      fetch(`https://pokeapi.co/api/v2/pokemon/${params.name}`),
+      fetch(`https://pokeapi.co/api/v2/pokemon/${params.id}`),
       fetch(`https://pokeapi.co/api/v2/pokemon-species/${params.name}`),
     ]);
     const pokemonData = await Promise.all(pokeApiRes.map((res) => res.json()));
@@ -161,8 +159,10 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
 export async function getStaticPaths() {
   const pokedexes = await fetchPokedexes();
   const pokemonSpecies = await fetchPokemonSpecies(pokedexes);
-  const paths = pokemonSpecies.map((species) => ({
-    params: { name: species.name },
+  const pokemon = await fetchPokemon(pokemonSpecies);
+
+  const paths = pokemon.map((pokemon) => ({
+    params: { id: pokemon.id.toString(), name: pokemon.species.name },
   }));
   return { paths, fallback: false };
 }

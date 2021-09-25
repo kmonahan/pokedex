@@ -1,10 +1,10 @@
 import { card, cardImg, cardTitle } from "./card.css";
 import Link from "next/link";
 
-function Card({ sprites, name, types }: Pokemon): JSX.Element {
+function Card({ id, sprites, name, types, species }: Pokemon): JSX.Element {
   return (
     <li className={card}>
-      <Link href={`/${name.toLowerCase()}`} passHref={true}>
+      <Link href={`/${id}/${species.name}`} passHref={true}>
         <a>
           <h2 className={cardTitle}>{name}</h2>
           <img

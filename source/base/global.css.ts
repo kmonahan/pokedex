@@ -4,4 +4,5 @@ import { globalStyle } from "@vanilla-extract/css";
 globalStyle("body", {
   fontFamily: fontFamilyTokens.primary,
   fontSize: fontScale["1"],
+  margin: 0,
 });

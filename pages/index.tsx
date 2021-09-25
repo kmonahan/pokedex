@@ -27,8 +27,8 @@ export default function Home({ pokemon }: HomePageProps) {
       <main className={constrain}>
         <h1 className={h1}>Pokémon Sun/Moon Pokédex</h1>
         <ol className={grid}>
-          {pokemon.map((pokemon) => (
-            <Card key={pokemon.name} {...pokemon} />
+          {pokemon.map((pokemon, index) => (
+            <Card key={`${pokemon.id}-${pokemon.name}-${index}`} {...pokemon} />
           ))}
         </ol>
       </main>
