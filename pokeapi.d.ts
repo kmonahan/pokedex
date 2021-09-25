@@ -95,3 +95,92 @@ interface Pokemon {
     type: NamedResource;
   }[];
 }
+
+interface PokemonSpecies {
+  id: number;
+  name: string;
+  order: number;
+  gender_rate: number;
+  capture_rate: number;
+  base_happiness: number;
+  is_baby: boolean;
+  is_legendary: boolean;
+  is_mythical: boolean;
+  hatch_counter: number;
+  has_gender_differences: boolean;
+  forms_switchable: boolean;
+  growth_rate: NamedResource;
+  pokedex_numbers: {
+    entry_number: number;
+    pokedex: NamedResource;
+  };
+  egg_groups: NamedResource;
+  color: NamedResource;
+  shape: NamedResource;
+  evolves_from_species: NamedResource;
+  evolution_chain: NamedResource;
+  habitats: NamedResource;
+  generation: NamedResource;
+  names: {
+    name: string;
+    language: NamedResource;
+  }[];
+  pal_park_encounters: {
+    base_score: number;
+    rate: number;
+    area: NamedResource;
+  }[];
+  flavor_text_entries: {
+    flavor_text: string;
+    language: NamedResource;
+    version: NamedResource;
+  }[];
+  form_descriptions: {
+    description: string;
+    language: NamedResource;
+  }[];
+  genera: {
+    genus: string;
+    language: NamedResource;
+  }[];
+  varieties: {
+    is_default: boolean;
+    pokemon: NamedResource;
+  }[];
+}
+
+interface ChainLink {
+  is_baby: boolean;
+  species: NamedResource;
+  evolution_details: {
+    item?: NamedResource;
+    trigger?: NamedResource;
+    gender?: number;
+    held_item?: NamedResource;
+    known_move?: NamedResource;
+    known_move_type?: NamedResource;
+    location?: NamedResource;
+    min_level?: number;
+    min_happiness?: number;
+    min_beauty?: number;
+    min_affection?: number;
+    needs_overworld_rain?: boolean;
+    party_species?: NamedResource;
+    party_type?: NamedResource;
+    relative_physical_stats?: number;
+    time_of_day?: string;
+    trade_species?: NamedResource;
+    turn_upside_down?: boolean;
+  }[];
+  evolves_to?: ChainLink[];
+}
+
+interface EvolutionChain {
+  id: number;
+  baby_trigger_item?: NamedResource;
+  chain?: ChainLink;
+}
+
+interface PokemonDetail extends Pokemon, PokemonSpecies {
+  evolution: EvolutionChain;
+}
