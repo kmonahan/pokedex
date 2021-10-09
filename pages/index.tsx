@@ -30,7 +30,7 @@ export default function Home({ pokemon }: HomePageProps) {
         </ol>
       </main>
 
-      <footer>Via the PokéAPI.</footer>
+      <footer>Via the PokéAPI. Icons via Google Fonts.</footer>
     </>
   );
 }
