@@ -23,14 +23,20 @@ const fetchPokemonSpecies = async (pokedexes: NamedResource[]) => {
       )
     )
   );
-  return [
-    ...new Set(
-      allPokemonSpecies.map((species) => ({
+  return Object.values(
+    allPokemonSpecies
+      .map((species) => ({
         name: species.name,
         url: species.url.replace("pokemon-species", "pokemon"),
       }))
-    ),
-  ];
+      .reduce<Record<string, NamedResource>>(
+        (uniquePokemonSpecies, pokemonSpecies) => {
+          uniquePokemonSpecies[pokemonSpecies.name] = pokemonSpecies;
+          return uniquePokemonSpecies;
+        },
+        {}
+      )
+  );
 };
 
 const fetchPokemon = async (pokemonSpecies: NamedResource[]) => {
