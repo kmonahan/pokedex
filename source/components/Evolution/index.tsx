@@ -3,6 +3,14 @@ import {
   detailLayoutSubgridHeader,
 } from "../Layout/detail.css";
 import Link from "next/link";
+import capitalize from "../../utility/capitalize";
+import { h2, h3 } from "../../base/headings.css";
+import {
+  EvolutionBlock,
+  EvolutionDetail,
+  EvolutionKey,
+  EvolutionList,
+} from "./evolution.css";
 
 interface EvolutionProps {
   chain: ChainLink;
@@ -45,20 +53,31 @@ function Evolution({ chain, currentPokemon }: EvolutionProps) {
   ];
   return (
     <div className={detailLayoutSubgrid}>
-      <h2 className={detailLayoutSubgridHeader}>Evolution Chain</h2>
+      <h2 className={`${detailLayoutSubgridHeader} ${h2}`}>Evolution Chain</h2>
       {evolutionChain.map((link, index) => (
-        <div key={`${link.species.name}-${index}`}>
-          <h3>
-            <Link
-              href={`/${link.species.url
-                .substring(0, link.species.url.length - 1)
-                .split("/")
-                .pop()}/${link.species.name}`}
-            >
-              {link.species.name}
-            </Link>
+        <div
+          key={`${link.species.name}-${index}`}
+          className={
+            EvolutionBlock[
+              index === evolutionChain.length - 1 ? "noEvolution" : "evolution"
+            ]
+          }
+        >
+          <h3 className={h3}>
+            {link.species.name !== currentPokemon ? (
+              <Link
+                href={`/${link.species.url
+                  .substring(0, link.species.url.length - 1)
+                  .split("/")
+                  .pop()}/${link.species.name}`}
+              >
+                {capitalize(link.species.name)}
+              </Link>
+            ) : (
+              capitalize(link.species.name)
+            )}
           </h3>
-          <dl>
+          <dl className={EvolutionList}>
             {link.evolution_details.map((details) => {
               return Object.entries(details)
                 .filter(([_key, value]) => value)
@@ -70,15 +89,19 @@ function Evolution({ chain, currentPokemon }: EvolutionProps) {
                   ) {
                     return (
                       <>
-                        <dt key={key}>{key}</dt>
-                        <dd>{value.name}</dd>
+                        <dt key={key} className={EvolutionKey}>
+                          {key}:
+                        </dt>
+                        <dd className={EvolutionDetail}>{value.name}</dd>
                       </>
                     );
                   }
                   return (
                     <>
-                      <dt key={key}>{key}</dt>
-                      <dd>{value}</dd>
+                      <dt key={key} className={EvolutionKey}>
+                        {key}:
+                      </dt>
+                      <dd className={EvolutionDetail}>{value}</dd>
                     </>
                   );
                 });

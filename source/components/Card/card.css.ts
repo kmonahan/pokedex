@@ -1,6 +1,6 @@
 import { style } from "@vanilla-extract/css";
 import { atoms } from "../../base/atoms.css";
-import { accentColor } from "../../base/vars.css";
+import { primaryColor } from "../../base/vars.css";
 
 export const card = style([
   atoms({
@@ -8,7 +8,7 @@ export const card = style([
   }),
   style({
     alignItems: "center",
-    backgroundColor: accentColor,
+    backgroundColor: primaryColor,
     color: "black",
     flexDirection: "column",
     display: "flex",

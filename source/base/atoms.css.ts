@@ -7,6 +7,11 @@ globalFontFace("Open Sans", {
   fontStyle: "normal",
 });
 globalFontFace("Open Sans", {
+  src: "url('/fonts/open-sans/OpenSans-Semibold-webfont.woff') format('woff')",
+  fontWeight: 600,
+  fontStyle: "normal",
+});
+globalFontFace("Open Sans", {
   src: "url('/fonts/open-sans/OpenSans-Bold-webfont.woff') format('woff')",
   fontWeight: 700,
   fontStyle: "normal",
@@ -35,11 +40,18 @@ export const spacingTokens = {
 };
 
 export const fontScale = {
+  0.5: "0.75rem",
   1: "1rem",
   1.5: "1.25rem",
   2: "1.5rem",
   3: "2rem",
   4: "3rem",
+};
+
+export const fontWeights = {
+  regular: 400,
+  semibold: 600,
+  bold: 700,
 };
 
 export const constrainWidths = {
@@ -99,6 +111,7 @@ const typography = createAtomicStyles({
   properties: {
     fontSize: fontScale,
     fontFamily: fontFamilyTokens,
+    fontWeight: fontWeights,
   },
 });
 

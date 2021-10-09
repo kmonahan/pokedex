@@ -7,12 +7,16 @@ import { GetStaticPropsContext } from "next";
 import { cardImg } from "../../source/components/Card/card.css";
 import Head from "next/head";
 import { constrain } from "../../source/components/Layout/layouts.css";
-import { h1 } from "../../source/base/headings.css";
+import { h1, h2 } from "../../source/base/headings.css";
 import {
   detailLayout,
   detailLayoutHeader,
+  detailLayoutSection,
 } from "../../source/components/Layout/detail.css";
 import Evolution from "../../source/components/Evolution";
+import capitalize from "../../source/utility/capitalize";
+import { Tag } from "../../source/components/Tag/tag.css";
+import Stat from "../../source/components/Stat";
 
 interface PokemonPageProps {
   pokemon: PokemonDetail;
@@ -22,43 +26,31 @@ function PokemonPage({ pokemon }: PokemonPageProps): JSX.Element {
   return (
     <>
       <Head>
-        <title>{pokemon.name} | Pokemon Sun/Moon Pokedex</title>
+        <title>{capitalize(pokemon.name)} | Pokemon Sun/Moon Pokedex</title>
       </Head>
       <main className={`${constrain} ${detailLayout}`}>
-        <h1 className={`${h1} ${detailLayoutHeader}`}>{pokemon.name}</h1>
-        <div>
+        <header className={detailLayoutHeader}>
+          <h1 className={`${h1}`}>{capitalize(pokemon.name)}</h1>
           <img
             className={cardImg}
             src={pokemon.sprites.front_default}
             alt={`${pokemon.name} front view`}
           />
-        </div>
-        <div>
-          <p>{pokemon.types.map((type) => type.type.name).join(", ")}</p>
-          {pokemon.is_baby && (
-            <p>
-              <strong>Baby</strong>
-            </p>
-          )}
-          {pokemon.is_legendary && (
-            <p>
-              <strong>Legendary</strong>
-            </p>
-          )}
-          {pokemon.is_mythical && (
-            <p>
-              <strong>Mythical</strong>
-            </p>
-          )}
-        </div>
+          {pokemon.types.map((type) => (
+            <span className={Tag}>{type.type.name}</span>
+          ))}
+          {pokemon.is_baby && <span className={Tag}>Baby</span>}
+          {pokemon.is_legendary && <span className={Tag}>Legendary</span>}
+          {pokemon.is_mythical && <span className={Tag}>Mythical</span>}
+        </header>
         {pokemon.evolution && pokemon.evolution.chain && (
           <Evolution
             chain={pokemon.evolution.chain}
             currentPokemon={pokemon.species.name}
           />
         )}
-        <div>
-          <h2>Moves</h2>
+        <div className={detailLayoutSection}>
+          <h2 className={h2}>Moves</h2>
           <ul>
             {pokemon.moves
               .filter(
@@ -87,12 +79,14 @@ function PokemonPage({ pokemon }: PokemonPageProps): JSX.Element {
               ))}
           </ul>
         </div>
-        <div>
-          <h2>Stats</h2>
+        <div className={detailLayoutSection}>
+          <h2 className={h2}>Stats</h2>
           {pokemon.stats.map((stat) => (
-            <div key={stat.stat.name}>
-              {stat.stat.name.replace("-", " ")}: {stat.base_stat}/255
-            </div>
+            <Stat
+              key={stat.stat.name}
+              name={stat.stat.name}
+              value={stat.base_stat}
+            />
           ))}
         </div>
       </main>

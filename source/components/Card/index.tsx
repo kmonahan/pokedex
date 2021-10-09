@@ -1,5 +1,6 @@
 import { card, cardImg, cardTitle } from "./card.css";
 import Link from "next/link";
+import { Tag } from "../Tag/tag.css";
 
 function Card({ id, sprites, name, types, species }: Pokemon): JSX.Element {
   return (
@@ -12,7 +13,11 @@ function Card({ id, sprites, name, types, species }: Pokemon): JSX.Element {
             src={sprites.front_default}
             alt={`${name} front view`}
           />
-          {types.map((type) => type.type.name).join(", ")}
+          <div>
+            {types.map((type) => (
+              <span className={Tag}>{type.type.name}</span>
+            ))}
+          </div>
         </a>
       </Link>
     </li>
