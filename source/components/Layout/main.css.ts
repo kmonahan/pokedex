@@ -9,4 +9,5 @@ import {
 export const mainCss = style({
   backgroundColor: backgroundColor,
   color: textColor,
+  minHeight: "100vh",
 });

@@ -11,17 +11,17 @@ export const theme = style({
   selectors: {
     "&.sun": {
       vars: {
-        [backgroundColor]: "#fff",
-        [primaryColor]: sunColors.offWhite,
-        [accentColor]: sunColors.orange,
-        [textColor]: "#000",
+        [backgroundColor]: sunColors.offWhite,
+        [primaryColor]: sunColors.yellow,
+        [accentColor]: sunColors.red,
+        [textColor]: sunColors.darkBlue,
       },
     },
     "&.moon": {
       vars: {
-        [backgroundColor]: "#000",
-        [primaryColor]: moonColors.darkBlue,
-        [accentColor]: moonColors.lightBlue,
+        [backgroundColor]: moonColors.extraDarkBlue,
+        [primaryColor]: moonColors.blue,
+        [accentColor]: moonColors.yellow,
         [textColor]: "#fff",
       },
     },

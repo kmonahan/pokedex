@@ -1,3 +1,4 @@
+import React from "react";
 import {
   detailLayoutSubgrid,
   detailLayoutSubgridHeader,
@@ -88,12 +89,10 @@ function Evolution({ chain, currentPokemon }: EvolutionProps) {
                     value.name
                   ) {
                     return (
-                      <>
-                        <dt key={key} className={EvolutionKey}>
-                          {key}:
-                        </dt>
+                      <React.Fragment key={key}>
+                        <dt className={EvolutionKey}>{key}:</dt>
                         <dd className={EvolutionDetail}>{value.name}</dd>
-                      </>
+                      </React.Fragment>
                     );
                   }
                   return (

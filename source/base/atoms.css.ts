@@ -61,17 +61,19 @@ export const constrainWidths = {
 };
 
 export const moonColors = {
-  purple: "#4d1f82",
-  darkBlue: "#0f2f8f",
-  lightBlue: "#98dffb",
-  silver: "#b8bc71",
+  extraDarkBlue: "#000814",
+  darkBlue: "#001d3d",
+  blue: "#003566",
+  yellow: "#ffc300",
+  lightYellow: "#ffd60a",
 };
 
 export const sunColors = {
-  red: "#bb2f1f",
-  yellow: "#fba81a",
-  orange: "#f8901f",
-  offWhite: "#f9e0a2",
+  red: "#a82222",
+  yellow: "#f4c871",
+  orange: "#f77f00",
+  offWhite: "#fff8d4",
+  darkBlue: "#003049",
 };
 
 export const colorTokens = {

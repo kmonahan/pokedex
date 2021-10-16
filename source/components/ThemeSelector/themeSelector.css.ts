@@ -4,7 +4,7 @@ import { accentColor, textColor } from "../../base/vars.css";
 
 const themeSelectorWrapper = style([
   atoms({
-    padding: 1,
+    padding: 0,
   }),
   style({
     border: 0,
