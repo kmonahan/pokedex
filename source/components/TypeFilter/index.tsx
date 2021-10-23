@@ -1,20 +1,24 @@
 import Select, { SingleValue } from "react-select";
 import { TypeFilterLabel, TypeFilterWrapper } from "./TypeFilter.css";
 import selectStyles from "./SelectStyles";
+import { OnChangeValue } from "react-select/dist/declarations/src/types";
 
 interface TypeFilterProps {
   handleTypeSelect: (type: string | null) => void;
   types: string[];
 }
 
+interface Option {
+  value: string;
+  label: string;
+}
+
 function TypeFilter({ types, handleTypeSelect }: TypeFilterProps): JSX.Element {
-  const options: { value: string; label: string }[] = types.map((type) => ({
+  const options: Option[] = types.map((type) => ({
     value: type,
     label: type,
   }));
-  const handleChange = (
-    newValue: SingleValue<{ value: string; label: string }>
-  ) => {
+  const handleChange = (newValue: OnChangeValue<Option, false>) => {
     if (newValue && newValue.value) {
       handleTypeSelect(newValue.value);
     } else {
@@ -30,7 +34,7 @@ function TypeFilter({ types, handleTypeSelect }: TypeFilterProps): JSX.Element {
       <Select
         styles={selectStyles}
         id="type-filter"
-        onChange={handleChange}
+        onChange={(newValue) => handleChange(newValue as SingleValue<Option>)}
         options={options}
         isClearable={true}
       />
