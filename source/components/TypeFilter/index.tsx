@@ -1,4 +1,6 @@
-import { ChangeEvent } from "react";
+import Select, { SingleValue } from "react-select";
+import { TypeFilterLabel, TypeFilterWrapper } from "./TypeFilter.css";
+import selectStyles from "./SelectStyles";
 
 interface TypeFilterProps {
   handleTypeSelect: (type: string | null) => void;
@@ -6,24 +8,33 @@ interface TypeFilterProps {
 }
 
 function TypeFilter({ types, handleTypeSelect }: TypeFilterProps): JSX.Element {
-  const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    const { target } = event;
-    if (target.value) {
-      handleTypeSelect(target.value);
+  const options: { value: string; label: string }[] = types.map((type) => ({
+    value: type,
+    label: type,
+  }));
+  const handleChange = (
+    newValue: SingleValue<{ value: string; label: string }>
+  ) => {
+    if (newValue && newValue.value) {
+      handleTypeSelect(newValue.value);
     } else {
       handleTypeSelect(null);
     }
   };
 
   return (
-    <select onChange={handleChange}>
-      <option value="">All types</option>
-      {types.sort().map((type) => (
-        <option key={type} value={type}>
-          {type}
-        </option>
-      ))}
-    </select>
+    <div className={TypeFilterWrapper}>
+      <label htmlFor="type-filter" className={TypeFilterLabel}>
+        Filter by Type
+      </label>
+      <Select
+        styles={selectStyles}
+        id="type-filter"
+        onChange={handleChange}
+        options={options}
+        isClearable={true}
+      />
+    </div>
   );
 }
 

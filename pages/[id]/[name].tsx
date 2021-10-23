@@ -37,7 +37,9 @@ function PokemonPage({ pokemon }: PokemonPageProps): JSX.Element {
             alt={`${pokemon.name} front view`}
           />
           {pokemon.types.map((type) => (
-            <span className={Tag}>{type.type.name}</span>
+            <span className={Tag} key={type.type.name}>
+              {type.type.name}
+            </span>
           ))}
           {pokemon.is_baby && <span className={Tag}>Baby</span>}
           {pokemon.is_legendary && <span className={Tag}>Legendary</span>}

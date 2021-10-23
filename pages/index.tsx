@@ -11,6 +11,7 @@ import {
 } from "../source/data";
 import TypeFilter from "../source/components/TypeFilter";
 import { useMemo, useState } from "react";
+import { SiteFooter } from "../source/components/Layout/siteFooter.css";
 
 interface HomePageProps {
   pokemon: Pokemon[];
@@ -53,7 +54,23 @@ export default function Home({ pokemon }: HomePageProps) {
         </ol>
       </main>
 
-      <footer>Via the PokéAPI. Icons via Google Fonts.</footer>
+      <footer className={SiteFooter}>
+        <div className={constrain}>
+          Via{" "}
+          <a href="https://pokeapi.co/" target="_blank" rel="nofollow">
+            the PokéAPI
+          </a>
+          . Icons via{" "}
+          <a
+            href="https://fonts.google.com/icons"
+            target="_blank"
+            rel="nofollow"
+          >
+            Google Fonts
+          </a>
+          .
+        </div>
+      </footer>
     </>
   );
 }

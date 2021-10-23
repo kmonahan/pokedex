@@ -15,7 +15,9 @@ function Card({ id, sprites, name, types, species }: Pokemon): JSX.Element {
           />
           <div>
             {types.map((type) => (
-              <span className={Tag}>{type.type.name}</span>
+              <span className={Tag} key={type.type.name}>
+                {type.type.name}
+              </span>
             ))}
           </div>
         </a>
